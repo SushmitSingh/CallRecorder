@@ -1,0 +1,114 @@
+<resources>
+    <string name="app_name">CallRecorder</string>
+    <string-array name="source_text">
+        <item>Auto (default)</item>
+        <item>Voice Line</item>
+        <item>Mic</item>
+        <item>System Default</item>
+        <item>VoIP</item>
+        <item>Voice Recognition</item>
+        <item>Camcorder</item>
+        <item>System RAW</item>
+    </string-array>
+
+    <string-array name="sample_rate_text">
+        <item>48 kHz</item>
+        <item>44.1 kHz (CD)</item>
+        <item>32 kHz</item>
+        <item>22 kHz</item>
+        <item>16 kHz (default)</item>
+        <item>11 kHz</item>
+        <item>8 kHz (telephone)</item>
+    </string-array>
+
+    <string-array name="delete_text">
+        <item>Keep all recording</item>
+        <item>older than day</item>
+        <item>older than week</item>
+        <item>older than 1 month</item>
+        <item>older than 3 months</item>
+        <item>older than 6 months</item>
+    </string-array>
+
+    <string-array name="format_text">
+        <item>2017-02-01 09.08.01.wav</item>
+        <item>20170201T090801.wav</item>
+        <item>1512340435 [Phone].wav</item>
+        <item>2017-02-01 09.08.01 ↓↑ [Caller ID].wav</item>
+    </string-array>
+
+    <string-array name="channels_text">
+        <item>Mono (default)</item>
+        <item>Stereo</item>
+    </string-array>
+
+    <string name="accessibility_service_label">Calls Recording accesibility service</string>
+    <string name="accessibility_service_description">To allow call recording on Android 10+ in the background, enable this service.</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="call_recording">Calls Recording</string>
+    <string name="no_folder_app">No folder view application installed</string>
+    <string name="hold_by_call">pause (hold by call)</string>
+    <string name="encoding">encoding</string>
+    <string name="pause">pause</string>
+    <string name="edit">edit</string>
+    <string name="recording">recording</string>
+    <string name="encoding_title">Encoding...</string>
+    <string name="recording_title">Recording</string>
+    <string name="title_header">%1$s free ~ %2$s left</string>
+    <string name="open_recording_folder">Open Recording Folder</string>
+    <string name="recording_list_is_empty">Recording List is Empty\n\nCheck \'Calls Recording\' to Start Recording Calls</string>
+
+    <string name="source_default">(Default)</string>
+    <string name="source_mic">(Mic)</string>
+    <string name="source_line">(Voice Line)</string>
+
+    <string name="call_recordings_support">Call Recordings support</string>
+    <string name="call_recordings_support_text">Most phones do not support high-quality (phone line) call recording. To enable call recording, install open-source firmware, choose different encoding options (ogg, MediaRecorder…), different audio sources (phone line, microphone, VoIP…), or root your phone.</string>
+    <string name="recordings_quality">Recordings Quality</string>
+    <string name="recordings_quality_text">If your phone does not support high quality call recording, the application will try MIC call recording (you may hear only one side: your or your interlocutor).</string>
+    <string name="task_managers">Task Managers</string>
+    <string name="task_managers_text">If your phone has battery optimization or task managers enabled, consider disabling them to keep the application running in the background (optional)</string>
+
+    <string name="recording_enabled">Recording enabled</string>
+    <string name="recording_disabled">Recording disabled</string>
+    <string name="callrecent_auto_save">Auto save in (%1$d)</string>
+    <string name="calls_out">Out</string>
+    <string name="calls_in">In</string>
+    <string name="save_button">Save</string>
+    <string name="mixer_paths_done">System mixer configured. Please reboot!</string>
+    <string name="mixer_paths_failed">Unable to configure system mixer</string>
+
+    <string name="pref_storage_title">Storage Path</string>
+    <string name="pref_rate_title">Sample Rate</string>
+    <string name="pref_encoding_title">Encoding</string>
+    <string name="pref_encoding_summary">Output file formats (.wav, .m4a, ...)</string>
+    <string name="pref_mode_title">Mode</string>
+    <string name="pref_mode_summary">Recording channels</string>
+    <string name="pref_delete_title">Delete Recordings</string>
+    <string name="pref_nameformat_title">Name Format</string>
+    <string name="pref_calldialog_title">Recent Call Dialog</string>
+    <string name="pref_calldialog_summary">Show rename / favorite dialog after call ended</string>
+    <string name="pref_optimization_title">Disable Battery Optimization</string>
+    <string name="pref_optimization_summary">Prevent app from being removed from memory</string>
+    <string name="pref_theme_title">Application Theme</string>
+    <string name="pref_theme_summary">Set application theme (dark / light)</string>
+    <string name="pref_mixerpaths_title">System Mixer Incall Recording</string>
+    <string name="pref_mixerpaths_summary">Allow system mixer to record calls for regular apps</string>
+    <string name="pref_recordings">Recordings</string>
+    <string name="pref_advanced">Advanced</string>
+    <string name="pref_application">Application</string>
+    <string name="menu_search">Search</string>
+    <string name="send_survey">Send Survey</string>
+    <string name="survey_know_issues">Know Issues:</string>
+    <string name="survey_none">No survey\'s</string>
+    <string name="survey_bad">Not working</string>
+    <string name="survey_good">Working</string>
+    <string name="survey_few_issues">Few issues</string>
+    <string name="survey_view">View Survey\'s</string>
+    <string name="survey_status">Status:</string>
+    <string name="sort_by_contact_z_a">Contact Z-A</string>
+    <string name="sort_by_contact_a_z">Contact A-Z</string>
+    <string name="enabled">Enabled</string>
+    <string name="disabled">Disabled</string>
+</resources>

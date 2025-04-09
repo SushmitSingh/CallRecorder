@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="round_corners" format="reference" />
+
+    <string-array name="source_values" translatable="false">
+        <item>-1</item>
+        <item>4</item>
+        <item>1</item>
+        <item>0</item>
+        <item>7</item>
+        <item>6</item>
+        <item>5</item>
+        <item>9</item>
+    </string-array>
+
+    <string-array name="sample_rate_values" translatable="false">
+        <item>48000</item>
+        <item>44100</item>
+        <item>32000</item>
+        <item>22050</item>
+        <item>16000</item>
+        <item>11025</item>
+        <item>8000</item>
+    </string-array>
+
+    <string name="delete_off" translatable="false">off</string>
+    <string name="delete_1day" translatable="false">1day</string>
+    <string name="delete_1week" translatable="false">1week</string>
+    <string name="delete_1month" translatable="false">1month</string>
+    <string name="delete_3month" translatable="false">3month</string>
+    <string name="delete_6month" translatable="false">6month</string>
+
+    <string-array name="delete_values" translatable="false">
+        <item>@string/delete_off</item>
+        <item>@string/delete_1day</item>
+        <item>@string/delete_1week</item>
+        <item>@string/delete_1month</item>
+        <item>@string/delete_3month</item>
+        <item>@string/delete_6month</item>
+    </string-array>
+
+    <string-array name="format_values" formatted="false" translatable="false">
+        <item>%s</item>
+        <item>%I</item>
+        <item>%T %p</item>
+        <item>%s %i %c</item>
+    </string-array>
+
+    <string-array name="channels_values" translatable="false">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+</resources>
