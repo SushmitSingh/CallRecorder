@@ -4,8 +4,6 @@ A robust Android Call Recorder using `AccessibilityService` and `MediaRecorder` 
 
 ✅ **Tested and working on Android 14 (API 34)**  
 🔒 Follows modern privacy and storage policies (Scoped Storage for Android 10+)  
-💡 Records audio with MediaRecorder using `MIC` source for loud volume  
-
 ---
 
 ## 🚀 Features
