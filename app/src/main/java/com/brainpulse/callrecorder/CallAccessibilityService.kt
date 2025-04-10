@@ -138,7 +138,7 @@ class CallAccessibilityService : AccessibilityService() {
                 try {
                     contentResolver.openFileDescriptor(uri, "w")?.use { pfd ->
                         recorder = MediaRecorder().apply {
-                            setAudioSource(MediaRecorder.AudioSource.MIC) // Use MIC for wider compatibility
+                            setAudioSource(MediaRecorder.AudioSource.VOICE_RECOGNITION)
                             setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
                             setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
                             setOutputFile(pfd.fileDescriptor)
@@ -175,7 +175,7 @@ class CallAccessibilityService : AccessibilityService() {
 
                 try {
                     recorder = MediaRecorder().apply {
-                        setAudioSource(MediaRecorder.AudioSource.MIC)
+                        setAudioSource(MediaRecorder.AudioSource.VOICE_RECOGNITION)
                         setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
                         setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
                         setOutputFile(outputPath)
