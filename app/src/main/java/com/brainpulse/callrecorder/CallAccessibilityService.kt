@@ -22,6 +22,7 @@ class CallAccessibilityService : AccessibilityService() {
     private var outputPath: String = ""
     private var recordingThread: Thread? = null
     private val interrupt = AtomicBoolean(false)
+    private var lastCallStartTime = 0L
     private lateinit var telephonyManager: TelephonyManager
 
     override fun onCreate() {
@@ -89,6 +90,21 @@ class CallAccessibilityService : AccessibilityService() {
 
     private fun startRecordingThread() {
         Log.d(TAG, "Attempting to start recording thread")
+
+        // Debounce call start trigger (avoid multiple starts)
+        val currentTime = System.currentTimeMillis()
+        if (currentTime - lastCallStartTime < 3000) {
+            Log.w(TAG, "Recording start skipped due to debounce")
+            return
+        }
+        lastCallStartTime = currentTime
+
+        // Avoid starting if already recording
+        if (isRecording.getAndSet(true)) {
+            Log.d(TAG, "Already recording, skipping thread")
+            return
+        }
+
         val wakeLockTag = "callrecorder:record_lock"
         val powerManager = getSystemService(POWER_SERVICE) as PowerManager
         val wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, wakeLockTag)
@@ -98,12 +114,11 @@ class CallAccessibilityService : AccessibilityService() {
             Log.d(TAG, "Wake lock acquired")
 
             val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
-            val fileName = "Call_$timestamp.m4a"
+            val fileName = "Call_${timestamp}_${UUID.randomUUID().toString().take(4)}.m4a"
 
             val sdk29OrAbove = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
 
             if (sdk29OrAbove) {
-                // MediaStore approach for Android 10+
                 val values = ContentValues().apply {
                     put(MediaStore.Audio.Media.DISPLAY_NAME, fileName)
                     put(MediaStore.Audio.Media.MIME_TYPE, "audio/mp4")
@@ -112,8 +127,10 @@ class CallAccessibilityService : AccessibilityService() {
                 }
 
                 val uri = contentResolver.insert(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, values)
+
                 if (uri == null) {
                     Log.e(TAG, "Failed to create MediaStore entry")
+                    isRecording.set(false)
                     wakeLock.release()
                     return@Thread
                 }
@@ -121,7 +138,7 @@ class CallAccessibilityService : AccessibilityService() {
                 try {
                     contentResolver.openFileDescriptor(uri, "w")?.use { pfd ->
                         recorder = MediaRecorder().apply {
-                            setAudioSource(MediaRecorder.AudioSource.VOICE_RECOGNITION)
+                            setAudioSource(MediaRecorder.AudioSource.MIC) // Use MIC for wider compatibility
                             setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
                             setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
                             setOutputFile(pfd.fileDescriptor)
@@ -129,7 +146,8 @@ class CallAccessibilityService : AccessibilityService() {
                             Thread.sleep(1000)
                             start()
                         }
-                        isRecording.set(true)
+
+                        Log.d(TAG, "Recording started (MediaStore)")
                         while (!interrupt.get()) {
                             Thread.sleep(1000)
                         }
@@ -139,6 +157,7 @@ class CallAccessibilityService : AccessibilityService() {
                     values.put(MediaStore.Audio.Media.IS_PENDING, 0)
                     contentResolver.update(uri, values, null, null)
                     outputPath = uri.toString()
+
                 } catch (e: Exception) {
                     Log.e(TAG, "Recording error (MediaStore): ${e.message}", e)
                     contentResolver.delete(uri, null, null)
@@ -148,7 +167,7 @@ class CallAccessibilityService : AccessibilityService() {
                 }
 
             } else {
-                // Legacy direct file-based approach for Android 9 and below
+                // Android 9 and below - legacy
                 val legacyDir = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC), "CallRecordings")
                 if (!legacyDir.exists()) legacyDir.mkdirs()
                 val legacyFile = File(legacyDir, fileName)
@@ -156,7 +175,7 @@ class CallAccessibilityService : AccessibilityService() {
 
                 try {
                     recorder = MediaRecorder().apply {
-                        setAudioSource(MediaRecorder.AudioSource.VOICE_RECOGNITION)
+                        setAudioSource(MediaRecorder.AudioSource.MIC)
                         setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
                         setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
                         setOutputFile(outputPath)
@@ -164,12 +183,14 @@ class CallAccessibilityService : AccessibilityService() {
                         Thread.sleep(1000)
                         start()
                     }
-                    isRecording.set(true)
+
+                    Log.d(TAG, "Recording started (Legacy)")
                     while (!interrupt.get()) {
                         Thread.sleep(1000)
                     }
+
                 } catch (e: Exception) {
-                    Log.e(TAG, "Recording error (legacy): ${e.message}", e)
+                    Log.e(TAG, "Recording error (Legacy): ${e.message}", e)
                 } finally {
                     stopRecording()
                     wakeLock.release()
@@ -178,7 +199,7 @@ class CallAccessibilityService : AccessibilityService() {
         }
 
         interrupt.set(false)
-        recordingThread?.start() ?: Log.e(TAG, "Failed to start recording thread")
+        recordingThread?.start()
     }
 
     private fun stopRecording() {
