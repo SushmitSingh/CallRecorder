@@ -111,4 +111,5 @@
     <string name="sort_by_contact_a_z">Contact A-Z</string>
     <string name="enabled">Enabled</string>
     <string name="disabled">Disabled</string>
+     <string name="disabled">Disabled1</string>
 </resources>
