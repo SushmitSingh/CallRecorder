@@ -1,4 +1,4 @@
-# 📞 Call Recorder Service (Android 14+ Compatible)
+# 📞 Call Recorder Service (Android 14+ Compatible)  its behavior can vary a lot depending on the device and Android version.
 
 A robust Android Call Recorder using `AccessibilityService` and `MediaRecorder` APIs, compatible with **Android 9 to Android 14+**. This app records incoming and outgoing calls and stores them as `.m4a` files in the Music directory. 
 
